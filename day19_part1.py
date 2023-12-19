@@ -15,7 +15,6 @@ def calculate_accepted_parts_ratings(workflows, parts):
             rule_condition = rule.split(':')
             if len(rule_condition) == 1:
                 # This is the last rule in the workflow, it has no condition
-                rule_details = {}
                 rules_as_dict.append((rule_condition[0]))
             else:
                 category = rule_condition[0][0]
@@ -23,10 +22,6 @@ def calculate_accepted_parts_ratings(workflows, parts):
                 value = int(rule_condition[0][2:])
 
                 rule_destination = rule_condition[1]
-                
-                rule_details = {}
-                rule_details[category] = (comparator, value)
-
                 rules_as_dict.append((category, comparator, value, rule_destination))
         workflow_rules[workflow_name] = rules_as_dict
 
