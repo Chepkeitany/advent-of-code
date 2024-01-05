@@ -10,10 +10,10 @@ def calculate_total_square_feet(input):
 
         smallest_side = min(l_w, w_h, h_l)
 
-        total_square_feet += smallest_side
         total_square_feet += 2 * l_w
         total_square_feet += 2 * w_h
         total_square_feet += 2 * h_l
+        total_square_feet += smallest_side
 
     return total_square_feet
 
