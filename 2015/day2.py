@@ -21,4 +21,3 @@ file = open("day2_all.txt")
 content = file.read().splitlines()
 print(calculate_total_square_feet(content))
 
-
