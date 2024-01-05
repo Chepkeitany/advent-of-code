@@ -17,7 +17,15 @@ def calculate_total_square_feet(input):
 
     return total_square_feet
 
+# Part 1
+# Sample test cases
+file = open("day2_test.txt")
+content = file.read().splitlines()
+
+assert calculate_total_square_feet(content) == 101, "Failed on sample input"
+
 file = open("day2_all.txt")
 content = file.read().splitlines()
-print(calculate_total_square_feet(content))
+assert calculate_total_square_feet(content) == 1598415, "Failed on main input"
 
+print("All tests passed!")
