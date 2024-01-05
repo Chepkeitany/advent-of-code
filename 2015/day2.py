@@ -40,6 +40,7 @@ content = file.read().splitlines()
 
 assert calculate_total_square_feet(content) == 101,     "Failed on sample input"
 
+# Main input
 file = open("day2_all.txt")
 content = file.read().splitlines()
 assert calculate_total_square_feet(content) == 1598415, "Failed on main input"
@@ -51,6 +52,7 @@ content = file.read().splitlines()
 
 assert calculate_smallest_perimeter(content) == 48,     "Failed on sample input"
 
+# Main input
 file = open("day2_all.txt")
 content = file.read().splitlines()
 assert calculate_smallest_perimeter(content) == 3812909, "Failed on main input"
