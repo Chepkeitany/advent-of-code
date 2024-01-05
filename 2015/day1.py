@@ -33,7 +33,7 @@ assert find_final_floor('())') == -1,     "Failed on input ())"
 assert find_final_floor(')())())') == -3, "Failed on input )())())"
 
 # Main input
-file = open("day1_input.txt", "r")
+file = open("day1_all.txt", "r")
 input = file.read()
 result = find_final_floor(input)
 assert result == 280, "Failed on puzzle input!"
