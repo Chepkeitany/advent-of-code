@@ -1,20 +1,4 @@
-import hashlib
-
-def compute_md5(value):
-    """Comput the md5 hash of a given value"""
-    # Convert the value to bytes, assuming the value is a string
-    value_bytes = value.encode()
-
-    # Create an MD5 hash object
-    md5_obj = hashlib.md5()
-
-    # Update the hash object with the bytes
-    md5_obj.update(value_bytes)
-
-    # Get the hexadecimal digest of the hash
-    md5_hash = md5_obj.hexdigest()
-
-    return md5_hash
+from hashlib import md5
 
 def lowest_number(input, number_of_zeros, match):
     """Calculate the lowest number that can be appended to input to give md5 hash
@@ -22,7 +6,7 @@ def lowest_number(input, number_of_zeros, match):
     """
     # Brute force: try all the possible values from 1 to 100 million
     for i in range(1, 100000000):
-        result = compute_md5(f'{input}{i}')
+        result = md5((f'{input}{i}').encode()).hexdigest()
         if result[:number_of_zeros] == match:
             return i
     return -1
