@@ -41,19 +41,19 @@ def calculate_permutations_and_distance(locations, routes_cost):
                     permutations.append(new_permutation)
 
     return shortest_distance, longest_distance
-def find_distance_to_all_locations(lines):
+def find_shortest_and_longest_distances(lines):
     """Calculate shortest distance to all locations"""
     routes_cost = {}
     locations = set()
 
     for line in lines:
         route, cost = line.split(" = ")
-        city1, city2 = route.split(" to ")
-        routes_cost[(city1, city2)] = int(cost)
-        routes_cost[(city2, city1)] = int(cost)
+        location1, location2 = route.split(" to ")
+        routes_cost[(location1, location2)] = int(cost)
+        routes_cost[(location2, location1)] = int(cost)
 
-        locations.add(city1)
-        locations.add(city2)
+        locations.add(location1)
+        locations.add(location2)
 
     # Build permutations of all the locations and
     # keep track of the permutation with the shortest distance
@@ -63,17 +63,17 @@ def find_distance_to_all_locations(lines):
 with open("day9_test.txt", encoding="utf-8") as file:
     content = file.read().splitlines()
 
-    shortest_distance, longest_distance = find_distance_to_all_locations(
+    min_distance, max_distance = find_shortest_and_longest_distances(
         content)
 
-    assert shortest_distance == 605, "Failed on test input - part1"
-    assert longest_distance  == 982, "Failed on test input - part2"
+    assert min_distance == 605, "Failed on test input - part1"
+    assert max_distance  == 982, "Failed on test input - part2"
 
 with open("day9_all.txt", encoding="utf-8") as file:
     content = file.read().splitlines()
-    shortest_distance, longest_distance = find_distance_to_all_locations(
+    min_distance, max_distance = find_shortest_and_longest_distances(
         content)
-    assert shortest_distance == 141, "Failed on main input - part1"
-    assert longest_distance  == 736, "Failed on test input - part2"
+    assert min_distance == 141, "Failed on main input - part1"
+    assert max_distance  == 736, "Failed on test input - part2"
 
 print("All tests passed!")
