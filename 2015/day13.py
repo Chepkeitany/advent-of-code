@@ -45,7 +45,7 @@ def generate_all_seating_permutations(people, people_arrangement_map):
     return best_happiness_points
 
 
-def find_optimal_happiness_points(lines):
+def find_optimal_happiness_points(lines, include_me):
     '''
     Find the optimal seating arrangement witht the highest change in happiness points
     '''
@@ -70,8 +70,15 @@ def find_optimal_happiness_points(lines):
             points = -int(points)
 
         people_arrangement_map[(first_person, second_person)] = points
+        if include_me:
+            people_arrangement_map[(first_person, "Me")] = 0
+            people_arrangement_map[("Me", first_person)] = 0
+
         people.add(first_person)
         people.add(second_person)
+
+    if include_me:
+        people.add("Me")
 
     return generate_all_seating_permutations(people, people_arrangement_map)
 
@@ -79,9 +86,14 @@ def find_optimal_happiness_points(lines):
 with open("day13_test.txt", encoding="utf-8") as file:
     content = file.read().splitlines()
 
-    print(find_optimal_happiness_points(content))
+    print(find_optimal_happiness_points(content, False))
+
+    # Part 2 - include myself
+    print(find_optimal_happiness_points(content, True))
 
 with open("day13_all.txt", encoding="utf-8") as file:
     content = file.read().splitlines()
 
-    print(find_optimal_happiness_points(content))
+    print(find_optimal_happiness_points(content, False))
+        # Part 2 - include myself
+    print(find_optimal_happiness_points(content, True))
