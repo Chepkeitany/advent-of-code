@@ -25,7 +25,7 @@ def calculate_property_scores(ingredient_amounts, ingredient_property_map):
 
 def generate_combinations(ingredients, total, current_combination):
     """
-    Recursively generate all possible combinations of 
+    Recursively generate all possible combinations of
     ingredient amounts that sum up to a total.
     """
     if len(current_combination) == len(ingredients):
