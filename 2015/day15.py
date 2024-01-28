@@ -2,6 +2,8 @@
 Finding highest-scoring cookie using the combinations
 of each of the given ingredients
 '''
+
+
 def find_highest_score(lines):
     """Find the highest score"""
     ingredient_property_map = {}
@@ -15,7 +17,6 @@ def find_highest_score(lines):
 
         ingredient_property_map[ingredient] = properties_map
 
-    print(ingredient_property_map)
     highest_score = 0
     for i in range(1, 100):
         for j in range(1, 100):
@@ -55,13 +56,14 @@ def find_highest_score(lines):
                     texture += ingredient_4["texture"] * l
                     calories += ingredient_4["calories"] * l
 
-                    if capacity <= 0 or durability <= 0 or flavor <= 0 or texture <= 0 or calories <= 0:
+                    if capacity <= 0 or durability <= 0 or flavor <= 0 or texture <= 0:
                         continue
                     current_score = capacity * durability * flavor * texture
                     if current_score > highest_score:
                         highest_score = current_score
 
     return highest_score
+
 
 if __name__ == "__main__":
     with open("day15_all.txt", encoding="utf-8") as file:
