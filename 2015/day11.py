@@ -99,8 +99,11 @@ def get_new_password(old_password):
 
 
 if __name__ == "__main__":
-    assert get_new_password('abcdefgh') == "abcdffaa", "Failed on get_new_password('abcdefgh')"
-    assert get_new_password('cqjxjnds') == "cqjxxyzz", "Failed on get_new_password('cqjxjnds')"
-    assert get_new_password('cqjxxyzz') == "cqkaabcc", "Failed on get_new_password('cqjxxyzz')"
+    assert get_new_password(
+        'abcdefgh') == "abcdffaa", "Failed on get_new_password('abcdefgh')"
+    assert get_new_password(
+        'cqjxjnds') == "cqjxxyzz", "Failed on get_new_password('cqjxjnds')"
+    assert get_new_password(
+        'cqjxxyzz') == "cqkaabcc", "Failed on get_new_password('cqjxxyzz')"
 
     print("All tests passed!")
