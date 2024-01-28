@@ -13,61 +13,58 @@ def parse_properties(property_str):
     return properties
 
 
+def calculate_property_scores(ingredient_amounts, ingredient_property_map):
+    """Calculate the total scores for each property based on ingredient amounts."""
+    total_properties = {
+        prop: 0 for prop in ingredient_property_map[next(iter(ingredient_property_map))]}
+    for ingredient, amount in ingredient_amounts.items():
+        for prop, value in ingredient_property_map[ingredient].items():
+            total_properties[prop] += value * amount
+    return total_properties
+
+
+def generate_combinations(ingredients, total, current_combination):
+    """
+    Recursively generate all possible combinations of 
+    ingredient amounts that sum up to a total.
+    """
+    if len(current_combination) == len(ingredients):
+        if sum(current_combination) == total:
+            yield current_combination
+        return
+
+    start = 1 if not current_combination else 0
+    for amount in range(start, total - sum(current_combination) + 1):
+        yield from generate_combinations(ingredients, total, current_combination + [amount])
+
+
 def find_highest_score(lines, include_calorie_check):
-    """Find the highest score"""
+    """Find the highest score for a dynamic number of ingredients."""
     ingredient_property_map = {
         line.split(": ")[0]: parse_properties(
             line.split(": ")[1]) for line in lines}
+    ingredients = list(ingredient_property_map.keys())
 
     highest_score = 0
-    for i in range(1, 100):
-        for j in range(1, 100):
-            for k in range(1, 100):
-                for l in range(1, 100):
-                    if i + j + k + l != 100:
-                        continue
-                    capacity, durability, flavor, texture, calories = 0, 0, 0, 0, 0
-                    ingredient_1 = ingredient_property_map["Frosting"]
-                    capacity += ingredient_1["capacity"] * i
-                    durability += ingredient_1["durability"] * i
-                    flavor += ingredient_1["flavor"] * i
-                    texture += ingredient_1["texture"] * i
-                    calories += ingredient_1["calories"] * i
+    for combination in generate_combinations(ingredients, 100, []):
+        ingredient_amounts = dict(zip(ingredients, combination))
+        total_properties = calculate_property_scores(
+            ingredient_amounts, ingredient_property_map)
 
-                    ingredient_2 = ingredient_property_map["Candy"]
+        if any(value <= 0 for value in total_properties.values()
+               if value != total_properties.get("calories", 0)):
+            continue
 
-                    capacity += ingredient_2["capacity"] * j
-                    durability += ingredient_2["durability"] * j
-                    flavor += ingredient_2["flavor"] * j
-                    texture += ingredient_2["texture"] * j
-                    calories += ingredient_2["calories"] * j
+        current_score = 1
+        for prop, value in total_properties.items():
+            if prop != "calories":
+                current_score *= value
 
-                    ingredient_3 = ingredient_property_map["Butterscotch"]
+        if include_calorie_check and total_properties.get(
+                "calories", 0) != 500:
+            continue
 
-                    capacity += ingredient_3["capacity"] * k
-                    durability += ingredient_3["durability"] * k
-                    flavor += ingredient_3["flavor"] * k
-                    texture += ingredient_3["texture"] * k
-                    calories += ingredient_3["calories"] * k
-
-                    ingredient_4 = ingredient_property_map["Sugar"]
-
-                    capacity += ingredient_4["capacity"] * l
-                    durability += ingredient_4["durability"] * l
-                    flavor += ingredient_4["flavor"] * l
-                    texture += ingredient_4["texture"] * l
-                    calories += ingredient_4["calories"] * l
-
-                    if capacity <= 0 or durability <= 0 or flavor <= 0 or texture <= 0:
-                        continue
-                    current_score = capacity * durability * flavor * texture
-
-                    if include_calorie_check:
-                        if calories == 500 and current_score > highest_score:
-                            highest_score = current_score
-                    else:
-                        if current_score > highest_score:
-                            highest_score = current_score
+        highest_score = max(highest_score, current_score)
 
     return highest_score
 
