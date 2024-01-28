@@ -4,7 +4,7 @@ of each of the given ingredients
 '''
 
 
-def find_highest_score(lines):
+def find_highest_score(lines, include_calorie_check):
     """Find the highest score"""
     ingredient_property_map = {}
     for line in lines:
@@ -59,8 +59,13 @@ def find_highest_score(lines):
                     if capacity <= 0 or durability <= 0 or flavor <= 0 or texture <= 0:
                         continue
                     current_score = capacity * durability * flavor * texture
-                    if current_score > highest_score:
-                        highest_score = current_score
+                
+                    if include_calorie_check:
+                        if calories == 500 and current_score > highest_score:
+                            highest_score = current_score
+                    else:
+                        if current_score > highest_score:
+                            highest_score = current_score
 
     return highest_score
 
@@ -68,4 +73,8 @@ def find_highest_score(lines):
 if __name__ == "__main__":
     with open("day15_all.txt", encoding="utf-8") as file:
         content = file.read().splitlines()
-        print(find_highest_score(content))
+        assert find_highest_score(content, False) == 18965440, "Failed on main input - part1"
+
+        assert find_highest_score(content, True) == 15862900, "Failed on main input - part2"
+
+        print("All tests passed!")
