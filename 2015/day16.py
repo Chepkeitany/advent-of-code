@@ -34,6 +34,7 @@ def check_part2(types, value):
         return detected_items[types] > value
     return detected_items[types] == value
 
+
 if __name__ == "__main__":
     with open("day16.txt", encoding="utf-8") as f:
         for line in f:
