@@ -49,16 +49,58 @@ def count_lights_on(grid):
 if __name__ == "__main__":
     with open("day18_test.txt", encoding="utf-8") as f:
         grid = [list(line) for line in f.read().split("\n") if line.strip() != ""]
+        rows, cols = len(grid), len(grid[0])
 
+        grid_copy = grid.copy()
+
+        # Part 1
         for _ in range(4):
+            grid_copy = game_of_life_step(grid_copy)
+
+        assert count_lights_on(grid_copy) == 4, "Failed on test input - part 1"
+
+
+        # Part 2
+        for _ in range(5):
+            # Ensure all the corner lights are on
+            grid[0][0] = '#'
+            grid[rows - 1][0] = '#'
+            grid[0][cols - 1] = '#'
+            grid[rows - 1][cols - 1] = '#'
+
             grid = game_of_life_step(grid)
 
-        assert count_lights_on(grid) == 4, "Failed on test input"
+        grid[0][0] = '#'
+        grid[rows - 1][0] = '#'
+        grid[0][cols - 1] = '#'
+        grid[rows - 1][cols - 1] = '#'
+        assert count_lights_on(grid) == 17, "Failed on test input"
 
     with open("day18_all.txt", encoding="utf-8") as f:
         grid = [list(line) for line in f.read().split("\n") if line.strip() != ""]
 
+        rows, cols = len(grid), len(grid[0])
+
+        grid_copy = grid.copy()
         for _ in range(100):
+            grid_copy = game_of_life_step(grid_copy)
+
+        assert count_lights_on(grid_copy) == 821, "Failed on main input - part 1"
+
+
+        for _ in range(100):
+            # Ensure all four corner lights are on
+            grid[0][0] = '#'
+            grid[rows - 1][0] = '#'
+            grid[0][cols - 1] = '#'
+            grid[rows - 1][cols - 1] = '#'
+
             grid = game_of_life_step(grid)
 
-        assert count_lights_on(grid) == 821, "Failed on main input - part 1"
+        grid[0][0] = '#'
+        grid[rows - 1][0] = '#'
+        grid[0][cols - 1] = '#'
+        grid[rows - 1][cols - 1] = '#'
+        assert count_lights_on(grid) == 886, "Failed on main input - part 2"
+
+        print("All tests passed!")
