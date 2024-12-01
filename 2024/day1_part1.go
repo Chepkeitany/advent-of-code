@@ -1,6 +1,6 @@
 package main
 
-// go run day1_part.go with the day1_all.txt file in the same directory
+// go run day1_part1.go with the day1_all.txt file in the same directory
 
 import (
 	"bufio"
