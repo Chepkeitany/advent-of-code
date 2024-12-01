@@ -25,8 +25,7 @@ func main() {
 	// Read the file line by line
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())// Read the current line
-		fmt.Println(line)
+		line := strings.TrimSpace(scanner.Text())
 
 		// Remember the input is separated by double spaces
 		parts := strings.Split(line, "  ")
