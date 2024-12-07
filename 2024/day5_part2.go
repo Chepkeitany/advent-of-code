@@ -42,10 +42,10 @@ func main() {
 		})
 
 		// Check if sorting changed the order
-		changed := false
+		newUpdateOrdering := false
 		for i := range original {
 			if original[i] != parts[i] {
-				changed = true
+				newUpdateOrdering = true
 				break
 			}
 		}
@@ -54,9 +54,7 @@ func main() {
 		middleValue, _ := strconv.Atoi(parts[len(parts)/2])
 
 		// Update the results array
-		if changed {
-			continue
-		} else {
+		if newUpdateOrdering {
 			sumOfMiddlePageNumbers += middleValue
 		}
 	}
