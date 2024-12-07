@@ -38,6 +38,7 @@ func Mul(point image.Point, n int) image.Point {
 }
 
 func main() {
+	// Read input from the file
 	file, _ := os.ReadFile("day4_all.txt")
 
 	rows := strings.Split(strings.TrimSpace(string(file)), "\n")
